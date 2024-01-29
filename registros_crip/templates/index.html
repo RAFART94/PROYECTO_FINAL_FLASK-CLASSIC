@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<h1>Criptomovimientos</h1>
+<table role="grid">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>From</th>
+            <th>Q</th>
+            <th>To</th>
+            <th>Q</th>
+            <th>PU</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in variable %}
+        <tr>
+            <td>{{item.Fecha}}</td>
+            <td>{{item.Hora}}</td>
+            <td>{{item.From}}</td>
+            <td>{{item.Q}}</td>
+            <td>{{item.To}}</td>
+            <td>{{item.Q}}</td>
+            <td>{{item.PU}}</td>
+            <td>
+                <a href="#">
+                <span class="material-symbols-outlined">
+                    visualizar
+                </span>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}

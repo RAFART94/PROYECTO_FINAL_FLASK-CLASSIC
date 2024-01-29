@@ -1,0 +1,13 @@
+header, footer{
+    background-color: black;
+    color: white;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+body{
+    min-height: 100vh;
+    display: grid;
+    grid-auto-flow: auto auto 1fr auto;
+    margin: 0;
+}
