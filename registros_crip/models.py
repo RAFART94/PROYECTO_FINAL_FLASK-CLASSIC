@@ -1,4 +1,5 @@
 import sqlite3
+import pytest
 
 def select_all():
     conexion = sqlite3.connect("data/movements.sqlite")
@@ -17,5 +18,16 @@ def select_all():
             posicion += 1
         
         lista_diccionario.append(diccionario)
+        conexion.close()
 
     return lista_diccionario
+
+def insert(registroForm):
+    conexion = sqlite3.connect("data/movements.sqlite")
+    cur = conexion.cursor()
+    res = cur.execute('insert into Criptomovimientos (date, time, moneda_from, cantidad_from, moneda_to, cantidad_to) VALUES (?,?,?,?,?,?);', registroForm)
+
+    conexion.commit()
+    conexion.close()
+    
+    
