@@ -1,5 +1,21 @@
 {% extends 'base.html' %}
 
+{% block cabecera %}
+<div class="container">
+    <nav>
+        <ul>
+          <li><strong>Registro de movimientos</strong></li>
+        </ul>
+        <ul>
+          <li><a href="/" role="button">Inicio</a></li>
+          <li><a role="button">Compraventa</a></li>
+          <li><a href="/status" role="button">Mis Inversiones</a></li>
+        </ul>
+      </nav>
+</div>
+{% endblock %}
+
 {% block contenido %}
+<h1>Nueva Transacción</h1>
 
 {% endblock %}
