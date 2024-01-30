@@ -7,9 +7,9 @@
           <li><strong>CRYPTOKENS</strong></li>
         </ul>
         <ul>
-          <li><a href="/" role="button">Inicio</a></li>
-          <li><a role="button">Compraventa</a></li>
-          <li><a href="/status" role="button">myCRYPTO</a></li>
+          <li><a href="/" role="button" style="background-color: white; color: black;">Inicio</a></li>
+          <li><a role="button" style="background-color: gray; border: gray;">Compraventa</a></li>
+          <li><a href="/status" role="button" style="background-color: white; color: black;">myCRYPTO</a></li>
         </ul>
       </nav>
 </div>
@@ -22,13 +22,13 @@
   <input type="date" name="date" value="{{dataForm['date']}}">
   <label>Hora</label>
   <input type="time" name="time" value="{{dataForm['time']}}">
-  <label>From</label>
+  <label >From:</label>
   <input type='text' name="moneda_from" placeholder="Ingrese moneda" step="0.01" value="{{dataForm['moneda_from']}}">
-  <label>Q</label>
+  <label>Q:</label>
   <input type="number" name="cantidad_from" step="0.01" value="{{dataForm['cantidad_from']}}">
-  <label>To</label>
+  <label>To:</label>
   <input type="text" name="moneda_to" placeholder="Ingrese moneda" step="0.01" value="{{dataForm['moneda_to']}}">
-  <label>Q</label>
+  <label>Q:</label>
   <input type="number" name="cantidad_to"step="0.01" value="{{dataForm['cantidad_to']}}">
  
   <button type="submit">Ejecutar Transacción</button>
