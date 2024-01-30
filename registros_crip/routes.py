@@ -27,8 +27,10 @@ def validarFormulario(datosFormularios):
 @app.route('/')#mostrará una tabla con los movimientos (compras y conversiones de criptomonedas) realizados por el usuario
 def index():
     dic = select_all()
-    
-    return render_template('index.html', datos=dic)
+    if dic:
+        return render_template('index.html', datos=dic)
+    else:
+        return render_template('index.html', sindatos=dic)
 
 
 @app.route('/purchase', methods=['GET','POST'])

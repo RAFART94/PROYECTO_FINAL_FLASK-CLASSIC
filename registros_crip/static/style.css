@@ -11,3 +11,12 @@ body{
     grid-auto-flow: auto auto 1fr auto;
     margin: 0;
 }
+
+#sinMovimientos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+    margin: auto;
+    text-align: center;
+}

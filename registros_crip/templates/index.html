@@ -8,46 +8,52 @@
         </ul>
         <ul>
           <li><a role="button" style="background-color: gray;  border: gray;">Inicio</a></li>
-          <li><a href="/purchase" role="button" style="background-color: white; color: black;">Compraventa</a></li>
-          <li><a href="/status" role="button" style="background-color: white; color: black;">myCRYPTO</a></li>
+          <li><a href="/purchase" role="button" style="background-color: white; color: black; border: gray;">Compraventa</a></li>
+          <li><a href="/status" role="button" style="background-color: white; color: black; border: gray;">myCRYPTO</a></li>
         </ul>
       </nav>
 </div>
 {% endblock %}
 
 {% block contenido %}
-<h1>Criptomovimientos</h1>
-<table role="grid">
-    <thead>
-        <tr>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>From</th>
-            <th>Q</th>
-            <th>To</th>
-            <th>Q</th>
-            <th>PU</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in datos %}
-        <tr>
-            <td>{{item.date}}</td>
-            <td>{{item.time}}</td>
-            <td>{{item.moneda_from}}</td>
-            <td>{{item.cantidad_from}}</td>
-            <td>{{item.moneda_to}}</td>
-            <td>{{item.cantidad_to}}</td>
-            <td>{{item.PU}}</td>
-            <td>
-                <a href="/status/{{item.id}}">
-                    <span class="material-symbols-outlined">
-                        visibility
-                    </span>
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
+    {% if not datos %}
+        <div id="sinMovimientos">
+            <h1>SIN MOVIMIENTOS</h1>
+        </div>
+    {% else %}
+    <h1>Criptomovimientos</h1>
+    <table role="grid">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>From</th>
+                <th>Q</th>
+                <th>To</th>
+                <th>Q</th>
+                <th>PU</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in datos %}
+            <tr>
+                <td>{{item.date}}</td>
+                <td>{{item.time}}</td>
+                <td>{{item.moneda_from}}</td>
+                <td>{{item.cantidad_from}}</td>
+                <td>{{item.moneda_to}}</td>
+                <td>{{item.cantidad_to}}</td>
+                <td>{{item.PU}}</td>
+                <td>
+                    <a href="/status/{{item.id}}">
+                        <span class="material-symbols-outlined">
+                            visibility
+                        </span>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+    {% endif %}
     </tbody>
 
 </table>
