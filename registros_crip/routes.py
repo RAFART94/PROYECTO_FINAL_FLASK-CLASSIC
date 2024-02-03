@@ -1,11 +1,9 @@
 from registros_crip import app
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, flash
 from registros_crip.models import *
-from registros_crip.models_class import *
 from datetime import date, time
 from config import APIKEY
-
-
+from registros_crip.forms import MovementsForm
 
 
 def validarFormulario(datosFormularios):
@@ -25,27 +23,23 @@ def validarFormulario(datosFormularios):
 @app.route('/')#mostrará una tabla con los movimientos (compras y conversiones de criptomonedas) realizados por el usuario
 def index():
     dic = select_all()
-    if dic:
-        return render_template('index.html', datos=dic)
-    else:
-        return render_template('index.html', sindatos=dic)
 
+    return render_template('index.html', datos=dic)
 
 @app.route('/purchase', methods=['GET','POST'])
 def purchase():
+    form = MovementsForm()
     if request.method == 'GET':
-        return render_template('purchase.html', dataForm={})
-    else:
+        return render_template('purchase.html', dataForm=form, EUR=getEUR(), BTC=getBTC(), ETH=getETH(), USDT=getUSDT(), 
+                               BNB=getBNB(), XRP=getXRP(), ADA=getADA(), SOL=getSOL(), DOT=getDOT(), MATIC=getMATIC())
+    else:#post
         errores = validarFormulario(request.form)
         if errores:
-            return render_template('purchase.html', errors=errores, dataForm=request.form)
+            return render_template('purchase.html', errors=errores, dataForm=form, rate = getRate(), EUR=getEUR(), BTC=getBTC(),
+                                    ETH=getETH(), USDT=getUSDT(), BNB=getBNB(), XRP=getXRP(),ADA=getADA(), SOL=getSOL(), DOT=getDOT(), MATIC=getMATIC())
+            
         
-        insert([request.form['moneda_from'],
-                request.form['cantidad_to'],
-                request.form['moneda_to'],
-                request.form['cantidad_to']])
-        
-        return redirect('/')
+    return redirect('/')
 
 @app.route('/status')
 def status():
