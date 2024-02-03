@@ -1,19 +1,16 @@
 import sqlite3
-import pytest
 from config import APIKEY
-from registros_crip import models_class
+from registros_crip.conexion import Conexion
 
 
 
 def select_all():
-    conexion = sqlite3.connect("data/movements.sqlite")
-    cur = conexion.cursor()
-    res = cur.execute('select * from Criptomovimientos;')
-    filas = res.fetchall()#Los datos de columnas (2024-01-01,14:55:37,EUR,etc)
-    columnas = res.description#Los nombres de columnas(id,0000)(date,0000)
+    conexion = Conexion('select id,date,time,moneda_from,cantidad_from,moneda_to,cantidad_to,precio_unitario from Criptomovimientos order by date DESC, time DESC;')
+    filas = conexion.res.fetchall()
+    columnas = conexion.res.description
 
     lista_diccionario= []
-    diccionario = {}
+
     for f in filas:
         posicion = 0
         diccionario = {}
@@ -22,7 +19,7 @@ def select_all():
             posicion += 1
         
         lista_diccionario.append(diccionario)
-        conexion.close()
+        conexion.con.close()
 
     return lista_diccionario
 

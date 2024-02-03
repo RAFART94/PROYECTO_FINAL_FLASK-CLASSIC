@@ -49,4 +49,4 @@ def purchase():
 
 @app.route('/status')
 def status():
-    return 'Aquí se mira el estado de mis inversiones'
+    return render_template('status.html')
