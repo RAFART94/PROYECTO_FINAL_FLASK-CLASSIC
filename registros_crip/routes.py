@@ -1,24 +1,22 @@
 from registros_crip import app
 from flask import render_template, request, redirect
 from registros_crip.models import *
+from registros_crip.models_class import *
 from datetime import date, time
+from config import APIKEY
+
 
 
 
 def validarFormulario(datosFormularios):
     errores = []#Crear lista para guardar errores
-    hoy = str(date.today())#Esto quita la fecha de hoy
     
-    if datosFormularios['date'] > hoy:
-        errores.append('La fecha no puede ser mayor a la actual')
-    if datosFormularios['time'] > hoy:
-        errores.append('La hora no puede ser mayor a la actual')
-    if datosFormularios['moneda_from'] == '':
-        errores.append('El concepto no puede ir vacío')
-    if datosFormularios['cantidad_from'] == '':
+    if datosFormularios['moneda_from'] == 0:
+        errores.append('Seleccione una moneda')
+    if datosFormularios['cantidad_from'] == 0:
         errores.append('La cantidad no puede ir vacío')
     if datosFormularios['moneda_to'] == '':
-        errores.append('El concepto no puede ir vacío')
+        errores.append('Seleccione una moneda')
     if datosFormularios['cantidad_to'] == '':
         errores.append('La cantidad no puede de vacío')
 
@@ -42,9 +40,7 @@ def purchase():
         if errores:
             return render_template('purchase.html', errors=errores, dataForm=request.form)
         
-        insert([request.form['date'],
-                request.form['time'],
-                request.form['moneda_from'],
+        insert([request.form['moneda_from'],
                 request.form['cantidad_to'],
                 request.form['moneda_to'],
                 request.form['cantidad_to']])

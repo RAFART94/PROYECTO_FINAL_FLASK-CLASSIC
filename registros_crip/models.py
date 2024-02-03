@@ -1,5 +1,9 @@
 import sqlite3
 import pytest
+from config import APIKEY
+from registros_crip import models_class
+
+
 
 def select_all():
     conexion = sqlite3.connect("data/movements.sqlite")
@@ -25,9 +29,28 @@ def select_all():
 def insert(registroForm):
     conexion = sqlite3.connect("data/movements.sqlite")
     cur = conexion.cursor()
-    res = cur.execute('insert into Criptomovimientos (date, time, moneda_from, cantidad_from, moneda_to, cantidad_to) VALUES (?,?,?,?,?,?);', registroForm)
+    res = cur.execute('insert into Criptomovimientos ( moneda_from, cantidad_from, moneda_to, cantidad_to,precio_unitario) VALUES (?,?,?,?,?);', registroForm)
 
     conexion.commit()
     conexion.close()
-    
+
+ 
+def updateExchange(apikey):
+    url = f'https://rest.coinapi.io/v1/exchangerate/{base}/{quota}?time={time}&apikey={APIKEY}'
+    r = requests.get(url)
+    respuesta = r.json()
+    if r.status_code == 200:
+        rate = respuesta['rate']
+        time = respuesta['time']
+    else:
+        raise ModelError(f"status:{r.status_code}, error: {respuesta['error']}")
+
+'''
+def precio_unitario():
+    conexion = sqlite3.connect("data/movements.sqlite")
+    cur = conexion.cursor()
+    res = cur.execute('insert into Criptomovimientos (moneda_from, cantidad_from, moneda_to, cantidad_to) VALUES (?,?,?,?,?);', registroForm)
+'''
+
+
     

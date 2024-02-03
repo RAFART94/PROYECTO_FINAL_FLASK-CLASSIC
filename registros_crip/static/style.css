@@ -20,3 +20,21 @@ body{
     margin: auto;
     text-align: center;
 }
+
+.estructura{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.estructura1, 
+.estructura2{
+    display: flex;
+    justify-content: right;
+    margin-bottom: 50px;
+}
+
+.izq,
+.dcha {
+    width: 40%;
+}

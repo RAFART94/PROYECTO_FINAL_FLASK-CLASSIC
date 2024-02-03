@@ -11,34 +11,82 @@
           <li><a role="button" style="background-color: gray; border: gray;">Compraventa</a></li>
           <li><a href="/status" role="button" style="background-color: white; color: black; border: gray;">myCRYPTO</a></li>
         </ul>
-      </nav>
+    </nav>
 </div>
 {% endblock %}
 
 {% block contenido %}
-<h1>COMPRA DE CRIPTOS</h1>
-<form action="/purchase" method="post">
-  <label>Fecha</label>
-  <input type="date" name="date" value="{{dataForm['date']}}">
-  <label>Hora</label>
-  <input type="time" name="time" value="{{dataForm['time']}}">
-  <label >From:</label>
-  <input type='text' name="moneda_from" placeholder="Ingrese moneda" step="0.01" value="{{dataForm['moneda_from']}}">
-  <label>Q:</label>
-  <input type="number" name="cantidad_from" step="0.01" value="{{dataForm['cantidad_from']}}">
-  <label>To:</label>
-  <input type="text" name="moneda_to" placeholder="Ingrese moneda" step="0.01" value="{{dataForm['moneda_to']}}">
-  <label>Q:</label>
-  <input type="number" name="cantidad_to"step="0.01" value="{{dataForm['cantidad_to']}}">
- 
-  <button type="submit">Ejecutar Transacción</button>
+<div class="container">
+    <h1>COMPRA DE CRIPTOS</h1>
+    <form action="/purchase" method="post" class="crypto-form">
+        <div class="estructura">
+            <div class="izq">
+                <label for="moneda_from">From:</label>
+                <select type="text" id="moneda_from" name="moneda_from" step="0.01" value="{{dataForm['moneda_from']}}">
+                    <option value="EUR">EUR</option>
+                    <option value="ETH">ETH</option>
+                    <option value="BNB">BNB</option>
+                    <option value="ADA">ADA</option>
+                    <option value="DOT">DOT</option>
+                    <option value="BTC">BTC</option>
+                    <option value="USDT">USDT</option>
+                    <option value="XRP">XRP</option>
+                    <option value="SOL">SOL</option>
+                    <option value="MATIC">MATIC</option>>
+                </select>
+            </div>
+            <div class="dcha">
+                <label for="moneda_to">To:</label>
+                <select type="text" id="moneda_to" name="moneda_to" step="0.01" value="{{dataForm['moneda_to']}}">
+                    <option value="EUR">EUR</option>
+                    <option value="ETH">ETH</option>
+                    <option value="BNB">BNB</option>
+                    <option value="ADA">ADA</option>
+                    <option value="DOT">DOT</option>
+                    <option value="BTC">BTC</option>
+                    <option value="USDT">USDT</option>
+                    <option value="XRP">XRP</option>
+                    <option value="SOL">SOL</option>
+                    <option value="MATIC">MATIC</option>
+                </select>
+            </div>
+        </div>
+        <div class="estructura">
+          <div class="izq">
+            <label for="cantidad_from">Q:</label>
+            <input type="number" id="cantidad_from" name="cantidad_from" step="0.01" value="{{dataForm['cantidad_from']}}">
+            <a href="#">
+            <span class="material-symbols-outlined">
+              calculate
+            </span>
+            </a>
+        </div>
+            <div class="dcha">
+                <label for="cantidad_to">Q:</label>
+                <input type="number" id="cantidad_to" name="cantidad_to" step="0.01" value="{{dataForm['cantidad_to']}}">
+            </div>
+        </div>
 
-</form>
-<article>
-  <ul>
-      {% for item in errors %}
-      <li>{{item}}</li>
-      {% endfor %}
-  </ul>
-</article>
+        <div class="estructura1">
+            <div class="dcha">
+                <label for="precio_unitario">P.U.:</label>
+                <input type="number" id="precio_unitario" name="precio_unitario" value="{{dataForm['precio_unitario']}}">
+            </div>
+        </div>
+        <div class="estructura2">
+            <div class="dcha">
+              <button type="submit">Ejecutar Transacción</button>
+            </div>
+        </div>
+    </form>
+
+    <article>
+        <ul>
+            {% for item in errors %}
+                <li>{{item}}</li>
+            {% endfor %}
+        </ul>
+    </article>
+</div>
 {% endblock %}
+
