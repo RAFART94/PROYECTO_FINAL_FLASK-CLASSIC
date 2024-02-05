@@ -1,6 +1,7 @@
 import sqlite3
 import requests
-from config import APIKEY
+from config import *
+from registros_crip.models_class import *
 from registros_crip.conexion import Conexion
 from registros_crip.forms import MovementsForm
 
@@ -26,8 +27,8 @@ def select_all():
 
     return lista_diccionario
 
-def insert(registroForm):
-    conexion = Conexion('insert into Criptomovimientos ( date, time, moneda_from, cantidad_from, moneda_to, cantidad_to, precio_unitario) VALUES (?,?,?,?,?,?,?);', registroForm)
+def save(registroForm):
+    conexion = Conexion('insert into Criptomovimientos (date, time, moneda_from, cantidad_from, moneda_to, cantidad_to, precio_unitario) VALUES (?,?,?,?,?,?,?);', registroForm)
 
     conexion.con.commit()
     conexion.con.close()

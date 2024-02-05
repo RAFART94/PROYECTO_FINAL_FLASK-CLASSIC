@@ -1,5 +1,5 @@
 import sqlite3
-from registros_crip import ORIGIN_DATA
+from config import *
 
 class Conexion():
     def __init__(self, querySql, params=[]):

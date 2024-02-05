@@ -6,8 +6,6 @@ from registros_crip.conexion import Conexion
 from registros_crip.forms import MovementsForm
 
 
-
-
 class ModelError(Exception):
     pass
 

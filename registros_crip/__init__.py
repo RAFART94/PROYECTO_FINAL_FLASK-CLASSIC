@@ -4,6 +4,4 @@ app = Flask(__name__, instance_relative_config=True)
 
 app.config.from_object('config')
 
-ORIGIN_DATA='data/movements.sqlite'
-
 from registros_crip.routes import *

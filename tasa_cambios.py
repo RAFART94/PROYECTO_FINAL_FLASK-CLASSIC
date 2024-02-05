@@ -1,3 +1,0 @@
-
-
-moneda_crypto = input
