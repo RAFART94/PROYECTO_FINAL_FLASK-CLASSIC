@@ -32,7 +32,40 @@ def insert(registroForm):
     conexion.con.commit()
     conexion.con.close()
 
- 
+
+
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
 def getEUR():
     url = f'https://rest.coinapi.io/v1/assets/?apikey={APIKEY}'
     r = requests.get(url)
@@ -141,16 +174,7 @@ def getMATIC():
             matic = item['asset_id']
     return matic
 
-def getRate(APIKEY):
-    moneda_from = MovementsForm(moneda_from)
-    moneda_to = MovementsForm(moneda_to)
-    url = f'https://rest.coinapi.io/v1/exchangerate/{moneda_from}/{moneda_to}?apikey={APIKEY}'
-    r = requests.get(url)
-    lista_monedas = r.json()
-    if r.status_code == 200:
-        rate = lista_monedas['rate']
-    
-    return rate
 
+'''
 
     
