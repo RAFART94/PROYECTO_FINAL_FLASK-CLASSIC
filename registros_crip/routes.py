@@ -18,14 +18,13 @@ def purchase():
     
     if request.method == 'GET':
         form = MovementsForm()
-        form.moneda_from.default = 'EUR'
         form.moneda_to.default = 'BTC'
         form.process()
+        movimientos = select_all()
 
-        return render_template('purchase.html', dataForm=form)
-    else:#post
-
-        form = MovementsForm(data=request.data)
+        return render_template('purchase.html', dataForm=form, data=movimientos)
+    else:
+        form = MovementsForm(data=request.form)
         moneda_from = form.moneda_from.data
         moneta_to = form.moneda_to.data
         cantidad = form.cantidad_from.data
@@ -34,10 +33,7 @@ def purchase():
         rate = exchange.getRate()
         cantidad_to = cantidad*rate
         precio_unitario = cantidad/cantidad_to
-
-        cantidad_to_formateada = f'{cantidad_to:.6f}'
-        rate_formateado = f'{rate:.6f}'
-        pu_formateado = f'{precio_unitario:.6f}'
+        
 
         def validateForm(form):
             errores = []
@@ -51,7 +47,6 @@ def purchase():
             return render_template('purchase.html', dataForm=form, errors=error)
 
         if form.calculate.data:
-
             return render_template('purchase.html', dataForm=form, rate=rate_formateado, cantidad_to=cantidad_to_formateada,precio_unitario=pu_formateado,
                                    moneta_to=moneta_to, moneda_from=moneda_from, cantidad=cantidad)
         
@@ -61,7 +56,7 @@ def purchase():
             hora = now.strftime('%H:%M:%S')
             save([fecha,hora,moneda_from,cantidad,moneta_to,cantidad_to_formateada,pu_formateado])
 
-            flash('Movimiento registrado con éxito')
+            flash('Transacción registrada')
 
             return redirect('/')
         else:

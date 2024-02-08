@@ -29,9 +29,78 @@ def select_all():
 
 def save(registroForm):
     conexion = Conexion('insert into Criptomovimientos (date, time, moneda_from, cantidad_from, moneda_to, cantidad_to, precio_unitario) VALUES (?,?,?,?,?,?,?);', registroForm)
-
     conexion.con.commit()
     conexion.con.close()
+
+def euros_gastados():#Devuelve los € gastados con 2 decimales
+    conexion = Conexion('select sum(cantidad_from) from Criptomovimientos where moneda_from = "EUR"')
+    resultado = conexion.res.fetchall()
+    conexion.con.close()
+    if resultado[0][0] is None:
+        resultado = 0
+    else:
+        resultado = f'{resultado[0][0]:,.2f}'
+        resultado = resultado.replace(',', '*')
+        resultado = resultado.replace('.', ',')
+        resultado = resultado.replace('*', '.')
+    return resultado
+
+def euros_gastados_bruto():#Devuelve los € gastados con todos los decimales
+    conexion = Conexion('select sum(cantidad_from) from Criptomovimientos where moneda_from = "EUR"')
+    resultado = conexion.res.fetchall()
+    conexion.con.close()
+    if resultado [0][0] is None:
+        resultado = 0
+    else:
+        resultado = resultado[0][0]
+    return resultado
+
+def euros_ganados():#Devuelve los € ganados con 2 decimales
+    conexion = Conexion('select sum(cantidad_to) from Criptomovimientos where moneda_to = "EUR"')
+    resultado = conexion.res.fetchall()
+    conexion.con.close()
+    if resultado[0][0] is None:
+        resultado = 0
+    else:
+        resultado = f'{resultado[0][0]:,.2f}'
+        resultado = resultado.replace(',', '*')
+        resultado = resultado.replace('.', ',')
+        resultado = resultado.replace('*', '.')
+    return resultado
+
+def euros_ganados_bruto():#Devuelve los € ganados con todos los decimales
+    conexion = Conexion('select sum(cantidad_to) from Criptomovimientos where moneda_to = "EUR"')
+    resultado = conexion.res.fetchall()
+    conexion.con.close()
+    if resultado [0][0] is None:
+        resultado = 0
+    else:
+        resultado = resultado[0][0]
+    return resultado
+
+def cripto_to(cripto):#Recibe cripto como parametro y devuelve la cantidad de esa cripto en la base de datos
+    conexion = Conexion(f'select sum(cantidad_to) from Criptomovimientos where moneda_to = "{cripto}"')
+    resultado = conexion.res.fetchall()
+    conexion.con.close()
+    if resultado [0][0] is None:
+        resultado = 0
+    else:
+        resultado = resultado[0][0]
+    return resultado
+
+def cripto_from(cripto):#Recibe cripto como parametro y devuelve la cantidad de esa cripto en la base de datos
+    conexion = Conexion(f'select sum(cantidad_from) from Criptomovimientos where moneda_from = "{cripto}"')
+    resultado = conexion.res.fetchall()
+    conexion.con.close()
+    if resultado [0][0] is None:
+        resultado = 0
+    else:
+        resultado = resultado[0][0]
+    return resultado
+
+
+
+
 
 
 
