@@ -5,12 +5,26 @@ from wtforms.validators import DataRequired,ValidationError
 from config import *
 from registros_crip.models import *
 from registros_crip.models_class import *
+from registros_crip.conexion import Conexion
 
 
-MONEDAS = [('EUR', 'Euro (EUR)'), ('ADA', 'Cardano (ADA)'), ('BNB', 'Binance Coin (BNB)'),
-         ('BTC', 'Bitcoin (BTC)'), ('DOT','Polkadot (DOT)'), ('ETH', 'Ethereum (ETH)'),
-         ('MATIC', 'Polygon (MATIC)'), ('SOL','Solana (SOL)'), ('USDT', 'Tether (USDT)'),
-         ("XRP", "XRP (XRP)")]
+MONEDAS = [('EUR', 'Euro (EUR)'), ('DOT','Polkadot (DOT)'), ("XRP", "XRP (XRP)"),
+            ('BTC', 'Bitcoin (BTC)'), ('ETH', 'Ethereum (ETH)'), ('SOL','Solana (SOL)'),
+            ('MATIC', 'Polygon (MATIC)'),  ('USDT', 'Tether (USDT)'), ('BNB', 'Binance Coin (BNB)'),
+            ('ADA', 'Cardano (ADA)')]
+
+def MonedasDisponibles():
+    MONEDA_FROM = ['EUR']
+    conexion = Conexion('select moneda_to from Criptomovimientos')
+    lista_monedas = conexion.res.fetchall()
+    for moneda in lista_monedas:
+        if moneda != 'EUR':
+            if moneda[0] == 'BTC':
+                moneda[0].replace('BTC', 'Bitcoin (BTC)')
+            MONEDA_FROM.append(moneda[0])
+            MONEDA_FROM = list(dict.fromkeys(MONEDA_FROM))
+
+    return MONEDA_FROM
 
 class MovementsForm(FlaskForm):
     date = DateField('Fecha')

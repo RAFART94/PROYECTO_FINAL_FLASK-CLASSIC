@@ -1,9 +1,8 @@
 from registros_crip import app
 from flask import Flask,render_template, request, redirect, flash
 from registros_crip.models import *
-from datetime import date, datetime, time
-from config import APIKEY
-from registros_crip.forms import MovementsForm, MONEDAS, ValidationError
+from datetime import date, datetime
+from registros_crip.forms import MovementsForm, MONEDAS, ValidationError, MonedasDisponibles
 from registros_crip.models_class import *
 
 
@@ -22,7 +21,7 @@ def purchase():
         form.process()
         movimientos = select_all()
 
-        return render_template('purchase.html', dataForm=form, data=movimientos)
+        return render_template('purchase.html', dataForm=form, monedasDisponibles = cripto_individual_ganada())
     else:
         form = MovementsForm(data=request.form)
         moneda_from = form.moneda_from.data
@@ -47,15 +46,14 @@ def purchase():
             return render_template('purchase.html', dataForm=form, errors=error)
 
         if form.calculate.data:
-            return render_template('purchase.html', dataForm=form, rate=rate_formateado, cantidad_to=cantidad_to_formateada,precio_unitario=pu_formateado,
-                                   moneta_to=moneta_to, moneda_from=moneda_from, cantidad=cantidad)
+            return render_template('purchase.html', dataForm=form, rate=formato_cantidad(rate), cantidad_to=formato_cantidad(cantidad_to),precio_unitario=formato_cantidad(precio_unitario),
+                                   moneta_to=moneta_to, moneda_from=moneda_from, cantidad=formato_cantidad(cantidad))
         
         if form.validate_on_submit():
             fecha = date.today()
             now = datetime.now()
             hora = now.strftime('%H:%M:%S')
-            save([fecha,hora,moneda_from,cantidad,moneta_to,cantidad_to_formateada,pu_formateado])
-
+            save([fecha,hora,moneda_from,cantidad,moneta_to,cantidad_to,precio_unitario])
             flash('Transacción registrada')
 
             return redirect('/')
@@ -66,4 +64,6 @@ def purchase():
 
 @app.route('/status')
 def status():
-    return render_template('status.html')
+    return render_template('status.html', invertido = euros_gastados(), recuperado = euros_ganados(),valorCompraBruto = euros_gastados_bruto() - euros_ganados_bruto(),
+                           valor_compra = formato_cantidad(euros_gastados_bruto() - euros_ganados_bruto()), valorActual = formato_cantidad(CryptoSuma().rateMyCripto()),
+                            valorActualBruto = CryptoSuma().rateMyCripto())

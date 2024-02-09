@@ -78,8 +78,8 @@ def euros_ganados_bruto():#Devuelve los € ganados con todos los decimales
         resultado = resultado[0][0]
     return resultado
 
-def cripto_to(cripto):#Recibe cripto como parametro y devuelve la cantidad de esa cripto en la base de datos
-    conexion = Conexion(f'select sum(cantidad_to) from Criptomovimientos where moneda_to = "{cripto}"')
+def cripto_individual_ganada(cripto):
+    conexion = Conexion(f'select sum(cantidad_to) from Criptomovimientos where moneda_to = "BTC"')
     resultado = conexion.res.fetchall()
     conexion.con.close()
     if resultado [0][0] is None:
@@ -88,15 +88,27 @@ def cripto_to(cripto):#Recibe cripto como parametro y devuelve la cantidad de es
         resultado = resultado[0][0]
     return resultado
 
-def cripto_from(cripto):#Recibe cripto como parametro y devuelve la cantidad de esa cripto en la base de datos
-    conexion = Conexion(f'select sum(cantidad_from) from Criptomovimientos where moneda_from = "{cripto}"')
-    resultado = conexion.res.fetchall()
-    conexion.con.close()
-    if resultado [0][0] is None:
+def formato_cantidad(cantidad):
+    if cantidad >= 1:
+        resultado = f'{cantidad:,.2f}'
+        resultado = resultado.replace(',', '*')
+        resultado = resultado.replace('.', ',')
+        resultado = resultado.replace('*', '.')
+    elif cantidad == 0:
         resultado = 0
+    elif cantidad < 0:
+        resultado = f'{cantidad:,.2f}'
+        resultado = resultado.replace(',', '*')
+        resultado = resultado.replace('.', ',')
+        resultado = resultado.replace('*', '.')
     else:
-        resultado = resultado[0][0]
+        resultado = f'{cantidad:,.6f}'
+        resultado = resultado.replace(',', '*')
+        resultado = resultado.replace('.', ',')
+        resultado = resultado.replace('*', '.')
+
     return resultado
+
 
 
 

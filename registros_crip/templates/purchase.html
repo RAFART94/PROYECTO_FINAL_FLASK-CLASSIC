@@ -19,6 +19,7 @@
 <div class="container">
     <h1>COMPRA DE CRIPTOS</h1>
     <form action="/purchase" method="post" class="crypto-form">
+        {{ dataForm.csrf_token }}
         <div class="estructura">
             <div class="izq">
                 <label for="moneda_from">Moneda Origen:</label>
@@ -43,7 +44,7 @@
         </div>
             <div class="dcha">
                 <label for="cantidad_to">Cantidad:</label>
-                <input type="number" id="cantidad_to" name="cantidad_to" step="0.01" value="{{dataForm['cantidad_to']}}">
+                <span>{{cantidad_to}} {{moneda_to}}</span>
             </div>
         </div>
 

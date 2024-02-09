@@ -24,7 +24,7 @@ class CryptoExchange():
     
             return self.rate
         else:
-            raise ModelError(f'status: {self.r.status_code} error: {self.lista_monedas["error"]}')
+            raise ModelError(f'status: {r.status_code} error: {lista_monedas["error"]}')
 
 class CryptoSuma():
     def __init__(self):
@@ -72,6 +72,25 @@ class CryptoSuma():
                         nuevo_resultado = [(resultado[i], resultado[i+1]) for i in range(0, len(resultado), 2)]
                         resultado = nuevo_resultado
                         return resultado
+        else:
+            return 0
+        
+    def rateMyCripto(self):
+        resta_cripto = self.criptoResta()
+        lista_valores_cripto = []
+        if resta_cripto != None:
+            for c in resta_cripto:
+                cripto = c[0]
+                r = requests.get(f'https://rest.coinapi.io/v1/exchangerate/{cripto}/EUR?apikey={APIKEY}')
+                resultado = r.json()
+                if r.status_code == 200:
+                    rate = resultado['rate']
+                    valor_cripto = rate * c[1]
+                    lista_valores_cripto.append(valor_cripto)
+                else:
+                    raise ModelError(f'status: {r.status_code} error: {resultado["error"]}')
+            
+            return sum(lista_valores_cripto)
         else:
             return 0
 
