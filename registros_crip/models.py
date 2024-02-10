@@ -78,7 +78,7 @@ def euros_ganados_bruto():#Devuelve los € ganados con todos los decimales
         resultado = resultado[0][0]
     return resultado
 
-def cripto_individual_ganada(cripto):
+def cripto_individual_ganada():
     conexion = Conexion(f'select sum(cantidad_to) from Criptomovimientos where moneda_to = "BTC"')
     resultado = conexion.res.fetchall()
     conexion.con.close()

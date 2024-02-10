@@ -35,4 +35,5 @@ class MovementsForm(FlaskForm):
     cantidad_to = FloatField('Cantidad')
     cantidad_from = FloatField('Cantidad', validators=[DataRequired(message='Ingrese cantidad deseada')])
     calculate = SubmitField('Calcular')
+    precio_unitario = FloatField('Precio Unitario')
     submit = SubmitField('Ejecutar transacción')

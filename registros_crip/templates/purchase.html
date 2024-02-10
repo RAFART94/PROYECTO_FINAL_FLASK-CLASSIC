@@ -17,56 +17,50 @@
 
 {% block contenido %}
 <div class="container">
-    <h1>COMPRA DE CRIPTOS</h1>
+    <h1>COMPRAVENTA DE CRIPTOS</h1>
     <form action="/purchase" method="post" class="crypto-form">
         {{ dataForm.csrf_token }}
         <div class="estructura">
             <div class="izq">
-                <label for="moneda_from">Moneda Origen:</label>
-                <select type="text" id="moneda_from" name="moneda_from" step="0.01" value="{{dataForm['moneda_from']}}">
-                </select>
+                {{ dataForm.moneda_from.label }}
+                {{ dataForm.moneda_from }}
             </div>
             <div class="dcha">
-                <label for="moneda_to">Moneda Deseada:</label>
-                <select type="text" id="moneda_to" name="moneda_to" step="0.01" value="{{dataForm['moneda_to']}}">
-                </select>
+                {{ dataForm.moneda_to.label }}
+                {{ dataForm.moneda_to }}
             </div>
         </div>
         <div class="estructura">
           <div class="izq">
-            <label for="cantidad_from">Cantidad:</label>
-            <input type="number" id="cantidad_from" name="cantidad_from" step="0.01" value="{{dataForm['cantidad_from']}}">
-            <a href="#">
-            <span class="material-symbols-outlined">
-              calculate
-            </span>
-            </a>
+            {{ dataForm.cantidad_from.label }}
+            {{ dataForm.cantidad_from(type='number', step='0.01', placeholder='Ingrese cantidad') }}
+            {{dataForm.calculate}} 
         </div>
+        
+        {% if errors %}
+            {% for item in errors %}
+                <li>{{item}}</li>
+            {% endfor %}
+        {% endif %}
+
             <div class="dcha">
-                <label for="cantidad_to">Cantidad:</label>
-                <span>{{cantidad_to}} {{moneda_to}}</span>
+                {{ dataForm.cantidad_to.label }}
+                <span>{{ cantidad_to }} {{moneda_to}}</span>
             </div>
         </div>
 
         <div class="estructura1">
             <div class="dcha">
-                <label for="precio_unitario">P.U.:</label>
-                <input type="number" id="precio_unitario" name="precio_unitario" value="{{dataForm['precio_unitario']}}">
+                {{ dataForm.precio_unitario.label }}
+                <span>{{ precio_unitario}} {{moneda_from}}</span>
             </div>
         </div>
         <div class="estructura2">
             <div class="dcha">
-              <button type="submit">Ejecutar Transacción</button>
+              {{ dataForm.submit }}
             </div>
         </div>
     </form>
 
-    <article>
-        <ul>
-            {% for item in errors %}
-                <li>{{item}}</li>
-            {% endfor %}
-        </ul>
-    </article>
 </div>
 {% endblock %}

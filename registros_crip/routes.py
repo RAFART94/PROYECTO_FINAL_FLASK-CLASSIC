@@ -14,12 +14,11 @@ def index():
 
 @app.route('/purchase', methods=['GET','POST'])
 def purchase():
-    
     if request.method == 'GET':
         form = MovementsForm()
+        form.moneda_from.defautl = 'EUR'
         form.moneda_to.default = 'BTC'
         form.process()
-        movimientos = select_all()
 
         return render_template('purchase.html', dataForm=form, monedasDisponibles = cripto_individual_ganada())
     else:
@@ -29,7 +28,7 @@ def purchase():
         cantidad = form.cantidad_from.data
         
         exchange = CryptoExchange(moneda_from, moneta_to)
-        rate = exchange.getRate()
+        rate = exchange.getRate(APIKEY)
         cantidad_to = cantidad*rate
         precio_unitario = cantidad/cantidad_to
         
@@ -60,7 +59,6 @@ def purchase():
         else:
 
             return render_template('purchase.html', errors={}, dataForm=form)
-
 
 @app.route('/status')
 def status():
