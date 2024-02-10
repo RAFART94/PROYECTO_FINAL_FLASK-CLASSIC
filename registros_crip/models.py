@@ -1,9 +1,8 @@
-import sqlite3
 import requests
 from config import *
 from registros_crip.models_class import *
 from registros_crip.conexion import Conexion
-from registros_crip.forms import MovementsForm
+from registros_crip.forms import *
 
 
 
@@ -78,11 +77,11 @@ def euros_ganados_bruto():#Devuelve los € ganados con todos los decimales
         resultado = resultado[0][0]
     return resultado
 
-def cripto_individual_ganada():
-    conexion = Conexion(f'select sum(cantidad_to) from Criptomovimientos where moneda_to = "BTC"')
+def cripto_individual_ganada(cripto):
+    conexion = Conexion(f'select sum(cantidad_to) from Criptomovimientos where moneda_to = "{cripto}"')
     resultado = conexion.res.fetchall()
     conexion.con.close()
-    if resultado [0][0] is None:
+    if resultado [0][0] == None:
         resultado = 0
     else:
         resultado = resultado[0][0]
@@ -109,154 +108,21 @@ def formato_cantidad(cantidad):
 
     return resultado
 
+def mostrar_monedas_to():
+    conexion = Conexion(f'select moneda_to from Criptomovimientos')
+    resultado = conexion.res.fetchall()
+    conexion.con.close()
+    lista = []
+    for moneda in resultado:
+        lista.append(moneda[0])
+    return lista
 
-
-
-
-
-
-
-        
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-'''
-def getEUR():
-    url = f'https://rest.coinapi.io/v1/assets/?apikey={APIKEY}'
-    r = requests.get(url)
-    lista_monedas = r.json()
-    for item in lista_monedas:
-        if item['asset_id'] == 'EUR':
-            euro = item['asset_id']
-    return euro
-
-def getEUR():
-    url = f'https://rest.coinapi.io/v1/assets/?apikey={APIKEY}'
-    r = requests.get(url)
-    lista_monedas = r.json()
-    for item in lista_monedas:
-        if item['asset_id'] == 'EUR':
-            euro = item['asset_id']
-    return euro
-
-def getEUR():
-    url = f'https://rest.coinapi.io/v1/assets/?apikey={APIKEY}'
-    r = requests.get(url)
-    lista_monedas = r.json()
-    for item in lista_monedas:
-        if item['asset_id'] == 'EUR':
-            euro = item['asset_id']
-    return euro
-
-def getBTC():
-    url = f'https://rest.coinapi.io/v1/assets/?apikey={APIKEY}'
-    r = requests.get(url)
-    lista_monedas = r.json()
-    for item in lista_monedas:
-        if item['asset_id'] == 'BTC':
-            btc = item['asset_id']
-    return btc
-
-def getETH():
-    url = f'https://rest.coinapi.io/v1/assets/?apikey={APIKEY}'
-    r = requests.get(url)
-    lista_monedas = r.json()
-    for item in lista_monedas:
-        if item['asset_id'] == 'ETH':
-            eth = item['asset_id']
-    return eth
-
-def getUSDT():
-    url = f'https://rest.coinapi.io/v1/assets/?apikey={APIKEY}'
-    r = requests.get(url)
-    lista_monedas = r.json()
-    for item in lista_monedas:
-        if item['asset_id'] == 'USDT':
-            usdt = item['asset_id']
-    return usdt
-
-def getBNB():
-    url = f'https://rest.coinapi.io/v1/assets/?apikey={APIKEY}'
-    r = requests.get(url)
-    lista_monedas = r.json()
-    for item in lista_monedas:
-        if item['asset_id'] == 'BNB':
-            bnb = item['asset_id']
-    return bnb
-
-def getXRP():
-    url = f'https://rest.coinapi.io/v1/assets/?apikey={APIKEY}'
-    r = requests.get(url)
-    lista_monedas = r.json()
-    for item in lista_monedas:
-        if item['asset_id'] == 'XRP':
-            xrp = item['asset_id']
-    return xrp
-
-def getADA():
-    url = f'https://rest.coinapi.io/v1/assets/?apikey={APIKEY}'
-    r = requests.get(url)
-    lista_monedas = r.json()
-    for item in lista_monedas:
-        if item['asset_id'] == 'ADA':
-            ada = item['asset_id']
-    return ada
-
-def getSOL():
-    url = f'https://rest.coinapi.io/v1/assets/?apikey={APIKEY}'
-    r = requests.get(url)
-    lista_monedas = r.json()
-    for item in lista_monedas:
-        if item['asset_id'] == 'SOL':
-            sol = item['asset_id']
-    return sol
-
-def getDOT():
-    url = f'https://rest.coinapi.io/v1/assets/?apikey={APIKEY}'
-    r = requests.get(url)
-    lista_monedas = r.json()
-    for item in lista_monedas:
-        if item['asset_id'] == 'DOT':
-            dot = item['asset_id']
-    return dot
-
-def getMATIC():
-    url = f'https://rest.coinapi.io/v1/assets/?apikey={APIKEY}'
-    r = requests.get(url)
-    lista_monedas = r.json()
-    for item in lista_monedas:
-        if item['asset_id'] == 'MATIC':
-            matic = item['asset_id']
-    return matic
-
-
-'''
-
-    
+def cripto_from(cripto):
+    conexion = Conexion(f'select sum(cantidad_from) from Criptomovimientos where moneda_from = "{cripto}"')
+    resultado = conexion.res.fetchall()
+    conexion.con.close()
+    if resultado[0][0] == None:
+        resultado = 0
+    else:
+        resultado = resultado[0][0]
+    return resultado

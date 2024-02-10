@@ -17,7 +17,7 @@
 
 {% block contenido %}
 <div class="container">
-    <h1>COMPRAVENTA DE CRIPTOS</h1>
+    <h1>CRYPTOTRANSACCIONES</h1>
     <form action="/purchase" method="post" class="crypto-form">
         {{ dataForm.csrf_token }}
         <div class="estructura">
@@ -34,15 +34,10 @@
           <div class="izq">
             {{ dataForm.cantidad_from.label }}
             {{ dataForm.cantidad_from(type='number', step='0.01', placeholder='Ingrese cantidad') }}
-            {{dataForm.calculate}} 
+            <div class="estructura2">
+            {{dataForm.calculate(style="background-color: black; color: white; border: gray;") }} 
+            </div>
         </div>
-        
-        {% if errors %}
-            {% for item in errors %}
-                <li>{{item}}</li>
-            {% endfor %}
-        {% endif %}
-
             <div class="dcha">
                 {{ dataForm.cantidad_to.label }}
                 <span>{{ cantidad_to }} {{moneda_to}}</span>
@@ -55,12 +50,19 @@
                 <span>{{ precio_unitario}} {{moneda_from}}</span>
             </div>
         </div>
-        <div class="estructura2">
+        <div class="estructura2" style="background-color: white; color: black; border: gray;">
             <div class="dcha">
-              {{ dataForm.submit }}
+              {{ dataForm.submit(style="background-color: black; color: white; border: gray;") }}
             </div>
         </div>
     </form>
+    <article>
+        {% if errors %}
+        {% for item in errors %}
+            <li>{{item}}</li>
+        {% endfor %}
+    {% endif %}
+    </article>
 
 </div>
 {% endblock %}
