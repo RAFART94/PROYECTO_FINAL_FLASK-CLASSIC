@@ -18,5 +18,33 @@
 {% block contenido %}
 <h1>myCRYNVERSIONES</h1>
 
+<div style="text-align: center;">
+  <h3>INVERTIDO:</h3>
+  <span>{{invertido}}€</span>
+</div>
+<div style="text-align: center;">
+  <h3>RECUPERADO:</h3>
+  <span>{{recuperado}}€</span>
+</div>
+<div style="text-align: center;">
+  <h3>VALOR DE COMPRA:</h3>
+  <span>{{valorCompra}}€</span>
+</div>
+<div style="text-align: center;">
+  <h3>VALOR ACTUAL:</h3>
+  {% if valorActualBruto == 0 %}
+  <span>{{valorActual}}€</span>
+  {% elif valorActualBruto < valorCompraBruto %}
+  <span class="perdidas" style="color: red;">{{valorActual}}€</span>
+  {% else %}
+  <span class="ganancias" style="color: green;">{{valorActual}}€</span>
+  {% endif %}
+</div>
+<form action="/">
+  <button type="submit" style="background-color: black; color: white; border: gray;">Volver</button>
+</form>
+
+
+
 
 {% endblock %}

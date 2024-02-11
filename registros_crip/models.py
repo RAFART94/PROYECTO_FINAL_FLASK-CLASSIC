@@ -1,10 +1,6 @@
 import requests
-from config import *
 from registros_crip.models_class import *
 from registros_crip.conexion import Conexion
-from registros_crip.forms import *
-
-
 
 def select_all():
     conexion = Conexion('select id,date,time,moneda_from,cantidad_from,moneda_to,cantidad_to,precio_unitario from Criptomovimientos order by date DESC, time DESC;')
@@ -31,7 +27,7 @@ def save(registroForm):
     conexion.con.commit()
     conexion.con.close()
 
-def euros_gastados():#Devuelve los € gastados con 2 decimales
+def euros_gastados():
     conexion = Conexion('select sum(cantidad_from) from Criptomovimientos where moneda_from = "EUR"')
     resultado = conexion.res.fetchall()
     conexion.con.close()
@@ -44,7 +40,7 @@ def euros_gastados():#Devuelve los € gastados con 2 decimales
         resultado = resultado.replace('*', '.')
     return resultado
 
-def euros_gastados_bruto():#Devuelve los € gastados con todos los decimales
+def euros_gastados_bruto():
     conexion = Conexion('select sum(cantidad_from) from Criptomovimientos where moneda_from = "EUR"')
     resultado = conexion.res.fetchall()
     conexion.con.close()
@@ -54,7 +50,7 @@ def euros_gastados_bruto():#Devuelve los € gastados con todos los decimales
         resultado = resultado[0][0]
     return resultado
 
-def euros_ganados():#Devuelve los € ganados con 2 decimales
+def euros_ganados():
     conexion = Conexion('select sum(cantidad_to) from Criptomovimientos where moneda_to = "EUR"')
     resultado = conexion.res.fetchall()
     conexion.con.close()
@@ -67,7 +63,7 @@ def euros_ganados():#Devuelve los € ganados con 2 decimales
         resultado = resultado.replace('*', '.')
     return resultado
 
-def euros_ganados_bruto():#Devuelve los € ganados con todos los decimales
+def euros_ganados_bruto():
     conexion = Conexion('select sum(cantidad_to) from Criptomovimientos where moneda_to = "EUR"')
     resultado = conexion.res.fetchall()
     conexion.con.close()
@@ -81,7 +77,7 @@ def cripto_individual_ganada(cripto):
     conexion = Conexion(f'select sum(cantidad_to) from Criptomovimientos where moneda_to = "{cripto}"')
     resultado = conexion.res.fetchall()
     conexion.con.close()
-    if resultado [0][0] == None:
+    if resultado [0][0] is None:
         resultado = 0
     else:
         resultado = resultado[0][0]
@@ -121,7 +117,7 @@ def cripto_from(cripto):
     conexion = Conexion(f'select sum(cantidad_from) from Criptomovimientos where moneda_from = "{cripto}"')
     resultado = conexion.res.fetchall()
     conexion.con.close()
-    if resultado[0][0] == None:
+    if resultado[0][0] is None:
         resultado = 0
     else:
         resultado = resultado[0][0]
