@@ -57,9 +57,15 @@ La página 'myCRYPTO' muestra la situación de la inversión, los euros gastados
 ### Agregar en el archivo config.py:
 
 ``ORIGIN_DATA='data/movements.sqlite'``
-``SECRET_KEY='AGREGA TU CODIGO ENCRIPTADO'``
-``APIKEY='AGREGA TU API KEY UNICA'``
 
 -La SECRET_KEY se obtiene en https://randomkeygen.com/
+
+``SECRET_KEY='AGREGA TU CODIGO ENCRIPTADO'``
+
 -La API KEY se obtiene en www.coinapi.io
+
+``APIKEY='AGREGA TU API KEY UNICA'``
+
+
+
 
